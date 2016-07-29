@@ -35,6 +35,7 @@ public class WordCountMRUnitTest {
         mapDriver.withOutput(new Text("one"), new IntWritable(1));
         mapDriver.withOutput(new Text("two"), new IntWritable(1));
         mapDriver.runTest();
+        assert (3 == mapDriver.getCounters().findCounter(WordCountMapper.Counters.TOTAL_WORDS).getValue());
     }
 
     @Test
@@ -54,6 +55,7 @@ public class WordCountMRUnitTest {
         mapReduceDriver.addOutput(new Text("cat"), new IntWritable(2));
         mapReduceDriver.addOutput(new Text("dog"), new IntWritable(1));
         mapReduceDriver.runTest();
+        assert (3 == mapReduceDriver.getCounters().findCounter(WordCountMapper.Counters.TOTAL_WORDS).getValue());
     }
 
 

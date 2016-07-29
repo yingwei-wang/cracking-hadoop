@@ -14,6 +14,10 @@ public class WordCountMapper extends Mapper<LongWritable, Text, Text, IntWritabl
 
     private Text word = new Text();
 
+    static enum Counters{
+        TOTAL_WORDS;
+    }
+
     @Override
     protected void map(LongWritable key, Text value, Context context) throws IOException, InterruptedException {
         String line = value.toString();
@@ -21,6 +25,7 @@ public class WordCountMapper extends Mapper<LongWritable, Text, Text, IntWritabl
         while (tokenizer.hasMoreTokens()) {
             word.set(tokenizer.nextToken());
             context.write(word, one);
+            context.getCounter(Counters.TOTAL_WORDS).increment(1);
         }
     }
 }
